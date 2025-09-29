@@ -1,45 +1,117 @@
-AI Dental Anomaly Detector
-This is a web-based application that uses a YOLOv10 machine learning model to detect potential anomalies in dental panoramic X-ray images. The application provides a simple, user-friendly interface for uploading an image and viewing the AI-analyzed results with bounding boxes drawn around detected issues.
+# 🦷 AI Dental Anomaly Detector
 
-Key Features
-AI-Powered Detection: Leverages a fine-tuned YOLOv10 model to identify dental anomalies.
+This is a **web-based application** that uses a **YOLOv10 machine learning model** to detect potential anomalies in **dental panoramic X-ray images**.
 
-Supported Detections: The model is trained to detect Cavity, Filling, Implant, and Impacted teeth.
+The application provides a simple, user-friendly interface for uploading an image and viewing the **AI-analyzed results** with bounding boxes drawn around detected issues.
 
-Web Interface: A clean, responsive, and easy-to-use interface built with HTML, Tailwind CSS, and JavaScript.
+## 🚀 Key Features
 
-Backend Server: A lightweight Node.js and Express server to handle image uploads and processing.
+- **AI-Powered Detection**: Leverages a fine-tuned YOLOv10 model to identify dental anomalies
+- **Supported Detections**: Trained to detect **Cavity, Filling, Implant, and Impacted Teeth**
+- **Web Interface**: Clean, responsive, and easy-to-use interface built with **HTML, Tailwind CSS, and JavaScript**
+- **Backend Server**: Lightweight **Node.js + Express** server for image uploads and processing
+- **Side-by-Side Comparison**: Displays the **original** and **processed** images for clear analysis
 
-Side-by-Side Comparison: Displays the original and processed images for clear analysis.
+## 🛠️ Technology Stack
 
-Technology Stack
-Machine Learning: Python, PyTorch, Ultralytics YOLOv10, OpenCV
+- **Machine Learning**: Python, PyTorch, Ultralytics YOLOv10, OpenCV
+- **Backend**: Node.js, Express.js
+- **Frontend**: HTML, Tailwind CSS, JavaScript, SweetAlert2
 
-Backend: Node.js, Express.js
+## 📂 Dataset
 
-Frontend: HTML, Tailwind CSS, JavaScript, SweetAlert2
+This project was trained on the **Dental Radiography for Anomaly Detection** dataset available on Kaggle.
 
-Getting Started
-Follow these instructions to set up and run the project on your local machine.
+🔗 [Dental Radiography on Kaggle](https://www.kaggle.com/datasets/imtkaggleteam/dental-radiography)
 
-Prerequisites
-Before you begin, ensure you have the following software installed on your system:
+## ⚙️ Getting Started
 
-Git: To clone the repository. Download Git
+Follow these steps to set up and run the project on your local machine.
 
-Node.js and npm: Required for the web server. Download Node.js (npm is included).
+### Prerequisites
 
-Python: Version 3.9 or higher is recommended. Download Python
+Make sure you have the following installed:
 
-Setup and Installation Guide
-Step 1: Clone the Repository
+- [Git](https://git-scm.com/)
+- [Node.js (with npm)](https://nodejs.org/)
+- [Python 3.9+](https://www.python.org/downloads/)
 
-Open your terminal or command prompt and clone the project from GitHub:
+### 🔧 Setup & Installation
 
-git clone [https://github.com/your-username/your-repository-name.git](https://github.com/your-username/your-repository-name.git)
-cd your-repository-name
+#### Step 1: Clone the Repository
 
-(Replace your-username and your-repository-name with your actual GitHub details)
+```bash
+git clone https://github.com/MustaqueemAlam/dental-detector-app.git
+cd dental-detector-app
+```
+
+#### Step 2: Add Model Files
+
+Place your trained model files into the model_files directory:
+
+```plaintext
+dental_yolov10_best.pt
+class_mapping.pkl
+```
+
+The final structure should look like this:
+
+```plaintext
+/dental-detector-app/
+├── 📂 model_files/
+│   ├── dental_yolov10_best.pt
+│   └── class_mapping.pkl
+...
+```
+
+#### Step 3: Set Up the Python Environment
+
+Create a virtual environment:
+
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On Windows:
+.\venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r python_inference/requirements.txt
+```
+
+#### Step 4: Set Up the Node.js Server
+
+```bash
+# Install Node.js dependencies
+npm install
+```
+
+### Running the Application
+
+1. Ensure the Python virtual environment is active
+2. Start the server:
+
+```bash
+node server.js
+```
+
+1. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### How to Use
+
+1. Navigate to [http://localhost:3000](http://localhost:3000)
+2. Upload a dental panoramic X-ray image
+3. Click "Diagnose Image"
+4. View results showing original and processed images with detected anomalies
+
+## ⚠️ Disclaimer
+
+This is an educational project and is not intended for real-world medical diagnosis. The AI model's predictions are not a substitute for professional medical advice from a qualified healthcare provider.
+
+
 
 Step 2: Add Model Files
 
@@ -100,12 +172,12 @@ node server.js
 
 You should see the following message in your terminal:
 
-Server is running on http://localhost:3000
+Server is running on [http://localhost:3000](http://localhost:3000)
 
-Open your web browser and navigate to http://localhost:3000. You can now use the application.
+Open your web browser and navigate to [http://localhost:3000](http://localhost:3000). You can now use the application.
 
 How to Use
-Go to http://localhost:3000 in your browser.
+Go to [http://localhost:3000](http://localhost:3000) in your browser.
 
 Drag and drop a dental panoramic X-ray image onto the upload area, or click to select a file from your computer.
 
