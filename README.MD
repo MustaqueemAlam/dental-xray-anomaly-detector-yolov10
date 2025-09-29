@@ -4,6 +4,8 @@ This is a **web-based application** that uses a **YOLOv10 machine learning model
 
 The application provides a simple, user-friendly interface for uploading an image and viewing the **AI-analyzed results** with bounding boxes drawn around detected issues.
 
+![Application Screenshot](screenshots/Screenshot_A.png)
+
 ## 🚀 Key Features
 
 - **AI-Powered Detection**: Leverages a fine-tuned YOLOv10 model to identify dental anomalies
@@ -98,96 +100,15 @@ npm install
 node server.js
 ```
 
-1. Open [http://localhost:3000](http://localhost:3000) in your browser
+1. Open [http://localhost:7000](http://localhost:7000) in your browser
 
 ### How to Use
 
-1. Navigate to [http://localhost:3000](http://localhost:3000)
+1. Navigate to [http://localhost:7000](http://localhost:7000)
 2. Upload a dental panoramic X-ray image
 3. Click "Diagnose Image"
 4. View results showing original and processed images with detected anomalies
 
 ## ⚠️ Disclaimer
 
-This is an educational project and is not intended for real-world medical diagnosis. The AI model's predictions are not a substitute for professional medical advice from a qualified healthcare provider.
-
-
-
-Step 2: Add Model Files
-
-Place your trained model files into the model_files directory:
-
-dental_yolov10_best.pt
-
-class_mapping.pkl
-
-The final structure should look like this:
-
-/dental-detector-app/
-|-- 📂 model_files/
-|   |-- dental_yolov10_best.pt
-|   |-- class_mapping.pkl
-...
-
-Step 3: Set Up the Python Environment
-
-It is crucial to create a virtual environment to manage Python dependencies and avoid conflicts.
-
-Create the virtual environment (this creates a venv folder in your project):
-
-python -m venv venv
-
-Activate the virtual environment:
-
-On Windows:
-
-.\venv\Scripts\activate
-
-On macOS/Linux:
-
-source venv/bin/activate
-
-After activation, your terminal prompt should start with (venv).
-
-Install Python dependencies:
-With the environment active, install all required libraries from the requirements.txt file.
-
-pip install -r python_inference/requirements.txt
-
-Step 4: Set Up the Node.js Server
-
-Install Node.js dependencies:
-In the project's root directory (where package.json is located), run:
-
-npm install
-
-This will download all necessary packages (like Express) and create a node_modules folder.
-
-Running the Application
-Ensure the Python virtual environment is active. If you've opened a new terminal, you must activate it again (.\venv\Scripts\activate).
-
-Start the server from the project's root directory:
-
-node server.js
-
-You should see the following message in your terminal:
-
-Server is running on [http://localhost:3000](http://localhost:3000)
-
-Open your web browser and navigate to [http://localhost:3000](http://localhost:3000). You can now use the application.
-
-How to Use
-Go to [http://localhost:3000](http://localhost:3000) in your browser.
-
-Drag and drop a dental panoramic X-ray image onto the upload area, or click to select a file from your computer.
-
-Click the "Diagnose Image" button.
-
-A loading pop-up will appear while the model processes the image.
-
-The results will be displayed, showing your original image alongside the image with detected anomalies highlighted by bounding boxes.
-
-Click "Analyze Another Image" to reset and upload a new file.
-
-Disclaimer
 This is an educational project and is not intended for real-world medical diagnosis. The AI model's predictions are not a substitute for professional medical advice from a qualified healthcare provider.
