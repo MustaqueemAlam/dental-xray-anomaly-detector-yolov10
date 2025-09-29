@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AI Dental Anomaly Detector</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- **NEW**: SweetAlert2 Library -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="preconnect" href="https://rsms.me/">
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+        <style>
+        html { font-family: 'Inter', sans-serif; }
+        @supports (font-variation-settings: normal) {
+          html { font-family: 'Inter var', sans-serif; }
+        }
+        .header-gradient {
+            background: linear-gradient(90deg, #1E40AF, #3B82F6);
+        }
+        .upload-area {
+            transition: all 0.2s ease-in-out;
+        }
+        .upload-area.dragover {
+            border-color: #2563EB;
+            background-color: #EFF6FF;
+            transform: scale(1.02);
+        }
+    </style>
+    </head>
+    <body class="bg-gray-50 text-gray-800 antialiased">
+
+        <!-- Header -->
+        <header class="header-gradient text-white shadow-md sticky top-0 z-10">
+            <div
+                class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                <h1 class="text-xl sm:text-2xl font-bold tracking-tight">AI
+                    Dental Anomaly Detector</h1>
+                <p class="text-xs sm:text-sm opacity-90 font-medium">Powered by
+                    YOLOv10</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="container mx-auto p-4 sm:p-6 md:p-10">
+            <div
+                class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-4xl mx-auto">
+
+                <div
+                    class="bg-blue-50 border-l-4 border-blue-500 text-blue-800 p-4 rounded-md mb-8"
+                    role="alert">
+                    <h3 class="font-bold text-lg mb-2">How this tool works:</h3>
+                    <p class="text-sm">
+                        This AI model is trained to identify potential anomalies
+                        in <strong>dental panoramic X-ray images</strong>. It
+                        can currently detect the following conditions:
+                        <span class="font-semibold">Cavity, Filling, Implant,
+                            and Impacted teeth.</span>
+                    </p>
+                    <p
+                        class="text-xs mt-3 font-semibold text-red-700 bg-red-100 p-2 rounded">
+                        Disclaimer: This tool is for educational purposes only
+                        and is not a substitute for professional medical advice.
+                    </p>
+                </div>
+
+                <!-- Upload Section -->
+                <div id="upload-section">
+                    <h2
+                        class="text-xl sm:text-2xl font-bold text-center text-gray-800 mb-2">Upload
+                        a Dental Radiograph</h2>
+                    <p class="text-center text-gray-500 mb-6">Drag & drop an
+                        image or click to select a file.</p>
+
+                    <form id="upload-form" class="space-y-6">
+                        <label for="file-upload"
+                            class="relative cursor-pointer group">
+                            <div id="upload-area"
+                                class="upload-area border-4 border-dashed border-gray-200 group-hover:border-gray-300 rounded-xl p-10 text-center">
+                                <svg class="mx-auto h-12 w-12 text-gray-400"
+                                    stroke="currentColor" fill="none"
+                                    viewBox="0 0 48 48" aria-hidden="true">
+                                    <path
+                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8"
+                                        stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                <div
+                                    class="mt-4 flex justify-center text-sm leading-6 text-gray-600">
+                                    <span
+                                        class="relative font-semibold text-blue-600 group-hover:text-blue-500">
+                                        <span>Upload a file</span>
+                                        <input id="file-upload" name="xrayImage"
+                                            type="file" class="sr-only"
+                                            accept="image/png, image/jpeg, image/jpg">
+                                    </span>
+                                    <p class="pl-1">or drag and drop</p>
+                                </div>
+                                <p id="filename"
+                                    class="text-xs leading-5 text-gray-500 mt-2 font-medium"></p>
+                            </div>
+                        </label>
+                        <button id="diagnose-btn" type="submit"
+                            class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center text-base">
+                            Diagnose Image
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Results Section -->
+                <div id="results-section" class="hidden mt-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                        <div>
+                            <h3
+                                class="text-lg sm:text-xl font-bold mb-3 text-center text-gray-700">Original
+                                Image</h3>
+                            <div
+                                class="bg-gray-100 rounded-lg overflow-hidden shadow-inner border">
+                                <img id="original-image" src
+                                    alt="Original X-ray"
+                                    class="w-full h-auto object-contain">
+                            </div>
+                        </div>
+                        <div>
+                            <h3
+                                class="text-lg sm:text-xl font-bold mb-3 text-center text-gray-700">AI
+                                Detected Anomalies</h3>
+                            <div
+                                class="bg-gray-100 rounded-lg overflow-hidden shadow-inner border">
+                                <img id="processed-image" src
+                                    alt="Processed X-ray with detections"
+                                    class="w-full h-auto object-contain">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-8">
+                        <button id="reset-btn"
+                            class="bg-gray-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300 transition-all duration-300">Analyze
+                            Another Image</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-gray-200 text-center py-5 mt-10">
+            <p class="text-sm text-gray-600">Developed by 2220769 IUB 2025</p>
+        </footer>
+
+        <script>
+        // ... (Keep existing element selections)
+        const form = document.getElementById('upload-form');
+        const fileInput = document.getElementById('file-upload');
+        const uploadArea = document.getElementById('upload-area');
+        const filenameDisplay = document.getElementById('filename');
+        const resultsSection = document.getElementById('results-section');
+        const originalImage = document.getElementById('original-image');
+        const processedImage = document.getElementById('processed-image');
+        const resetBtn = document.getElementById('reset-btn');
+
+        // ... (Keep file selection and drag/drop listeners)
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                filenameDisplay.textContent = fileInput.files[0].name;
+                uploadArea.classList.add('border-blue-500', 'bg-blue-50');
+            }
+        });
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false)
+        });
+        function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
+        uploadArea.addEventListener('dragenter', () => uploadArea.classList.add('dragover'), false);
+        uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'), false);
+        function handleDrop(e) {
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            fileInput.files = files;
+            if (fileInput.files.length > 0) {
+                 filenameDisplay.textContent = fileInput.files[0].name;
+                 uploadArea.classList.add('border-blue-500', 'bg-blue-50');
+            }
+        }
+        
+        // **UPDATED**: Form submission with SweetAlert2
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!fileInput.files[0]) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'No File Selected',
+                    text: 'Please choose an image file before diagnosing.',
+                });
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('xrayImage', fileInput.files[0]);
+
+            // Show loading alert
+            Swal.fire({
+                title: 'Analyzing Image...',
+                text: 'Please wait while the AI processes the radiograph.',
+                imageUrl: 'https://media.tenor.com/JOkU-2l_x2IAAAAC/blue-loading-screen.gif',
+                imageWidth: 150,
+                imageHeight: 150,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    // This will catch errors sent from the server
+                    throw new Error(result.details || result.error || 'An unknown error occurred on the server.');
+                }
+                
+                // Close loading alert on success
+                Swal.close();
+
+                // Show results
+                originalImage.src = result.original + '?' + new Date().getTime();
+                processedImage.src = result.processed + '?' + new Date().getTime();
+
+                document.getElementById('upload-section').classList.add('hidden');
+                resultsSection.classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Processing Failed',
+                    text: `Something went wrong. Please try another image. Details: ${error.message}`,
+                });
+            }
+        });
+
+        // Reset button functionality remains the same
+        resetBtn.addEventListener('click', () => {
+            resultsSection.classList.add('hidden');
+            document.getElementById('upload-section').classList.remove('hidden');
+            form.reset();
+            filenameDisplay.textContent = '';
+            uploadArea.classList.remove('border-blue-500', 'bg-blue-50');
+            originalImage.src = '';
+            processedImage.src = '';
+        });
+
+    </script>
+    </body>
+</html>
